@@ -5,6 +5,12 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpClient("ApiClient", client =>
+{
+    // Base URL for all API services, you can change this as needed
+    client.BaseAddress = new Uri("https+http://aspiredemo-api");
+});
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
