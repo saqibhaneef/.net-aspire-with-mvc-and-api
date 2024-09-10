@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AspireDemo/.vs/AspireDemo
+/AspireDemo/AspireDemo/bin/Debug/net8.0
+bin
+.vs
+obj
