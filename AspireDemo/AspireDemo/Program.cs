@@ -1,7 +1,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.AspireDemo_Api>("aspiredemo-api");
+var api = builder.AddProject<Projects.AspireDemo_Api>("aspiredemo-api");
 
-builder.AddProject<Projects.AspireDemo_Mvc>("aspiredemo-mvc");
+builder.AddProject<Projects.AspireDemo_Mvc>("aspiredemo-mvc")
+    .WithReference(api);
 
 builder.Build().Run();
