@@ -1,8 +1,17 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var api = builder.AddProject<Projects.AspireDemo_Api>("aspiredemo-api");
+var password = builder.AddParameter("password");
+
+var rabbit = builder.AddRabbitMQ("messaging", password: password)
+    .WithManagementPlugin();
+
+var api = builder.AddProject<Projects.AspireDemo_Api>("aspiredemo-api")
+    .WithReference(rabbit);
 
 builder.AddProject<Projects.AspireDemo_Mvc>("aspiredemo-mvc")
-    .WithReference(api);
+    .WithReference(api)
+    .WithReference(rabbit);
+
+
 
 builder.Build().Run();
