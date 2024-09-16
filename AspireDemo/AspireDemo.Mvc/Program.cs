@@ -1,8 +1,13 @@
+using RabbitConsumer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
 // Add services to the container.
+builder.AddRabbitMQClient("messaging");
+builder.Services.AddHostedService<ForecastProcessingJob>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("ApiClient", client =>
