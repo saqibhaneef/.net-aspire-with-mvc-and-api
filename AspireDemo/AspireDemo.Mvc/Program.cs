@@ -6,6 +6,8 @@ builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.AddRabbitMQClient("messaging");
+builder.AddRedisOutputCache("cache");
+
 builder.Services.AddHostedService<ForecastProcessingJob>();
 
 builder.Services.AddControllersWithViews();
@@ -34,6 +36,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseOutputCache();
 
 app.MapControllerRoute(
     name: "default",

@@ -15,7 +15,7 @@ builder.AddSqlServerDbContext<ForecastContext>("ForecastDb");
 //    opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoeMoneyDb"));
 //});
 
-
+builder.AddRedisDistributedCache("cache");
 
 builder.Services.AddTransient<Seeder>();
 

@@ -58,7 +58,7 @@ public class ForecastProcessingJob : BackgroundService
     {
 
         string messagetext = Encoding.UTF8.GetString(args.Body.ToArray());
-        _logger.LogInformation("All forecasts retrieved from the Forecast at {now}. Message Text: {text}", DateTime.Now, messagetext);
+        _logger.LogInformation("All forecasts retrieved from the Forecast at (Consumer time: {now}). Message Text: {text}", DateTime.Now, messagetext);
 
         var message = args.Body;
     }

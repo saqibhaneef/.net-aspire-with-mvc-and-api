@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AspireDemo.Mvc.Models;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace AspireDemo.Mvc.Controllers;
 
@@ -30,7 +31,7 @@ public class HomeController : Controller
 
         return forecasts;
     }
-
+    [OutputCache(Duration = 10, VaryByQueryKeys = new string[] { "*" })]
     public async Task<IActionResult> Index()
     {
         var forecasts = await GetWeatherAsync();
