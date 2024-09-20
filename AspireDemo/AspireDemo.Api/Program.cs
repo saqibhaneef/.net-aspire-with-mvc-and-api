@@ -1,7 +1,6 @@
 using AspireDemo.Api.Data;
 using AspireDemo.Api.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +9,13 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.AddRabbitMQClient("messaging");
 
-builder.Services.AddDbContext<ForecastContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoeMoneyDb"));
-});
+builder.AddSqlServerDbContext<ForecastContext>("ForecastDb");
+//builder.Services.AddDbContext<ForecastContext>(opt =>
+//{
+//    opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoeMoneyDb"));
+//});
+
+
 
 builder.Services.AddTransient<Seeder>();
 
