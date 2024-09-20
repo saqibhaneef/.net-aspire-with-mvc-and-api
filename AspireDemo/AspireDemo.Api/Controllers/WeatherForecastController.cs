@@ -1,3 +1,4 @@
+using AspireDemo.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
@@ -6,31 +7,23 @@ namespace AspireDemo.Api.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
-{
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
+{  
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly RabbitMQ.Client.IConnection connection;
+    private readonly ForecastContext forecastContext;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, RabbitMQ.Client.IConnection connection)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, RabbitMQ.Client.IConnection connection, ForecastContext forecastContext)
     {
         _logger = logger;
         this.connection = connection;
+        this.forecastContext = forecastContext;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        var forcasts= Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        
+        var forcasts=this.forecastContext.WeatherForecasts.ToList();
 
         CreateMessage(this.connection);
 
